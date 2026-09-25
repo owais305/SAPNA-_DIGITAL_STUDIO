@@ -1,0 +1,124 @@
+.bookings-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.bookings-search {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+}
+.bookings-search:focus {
+  border-color: var(--accent);
+}
+
+.bookings-status-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.chip:hover {
+  color: var(--text);
+}
+.chip--active {
+  background: var(--text);
+  color: #0b0e15;
+  border-color: var(--text);
+}
+
+.stack-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stack-cell .muted {
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.status-select {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.status-select--pending {
+  color: var(--amber);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+.status-select--confirmed {
+  color: var(--blue);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+.status-select--completed {
+  color: var(--green);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+.status-select--cancelled {
+  color: var(--red);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media (min-width: 640px) {
+  .bookings-filters {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .bookings-search {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .row-actions {
+    flex-direction: column;
+  }
+  .row-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+  .modal-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

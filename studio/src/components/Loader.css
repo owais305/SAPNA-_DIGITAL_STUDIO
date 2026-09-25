@@ -1,0 +1,246 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.loader--done {
+  display: none;
+}
+
+/* ---------- ambient light sweep (plays only while focusing) ---------- */
+.loader__sweep {
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(
+    100deg,
+    transparent 42%,
+    rgba(201, 168, 118, 0.09) 48%,
+    rgba(224, 192, 144, 0.16) 50%,
+    rgba(201, 168, 118, 0.09) 52%,
+    transparent 58%
+  );
+  transform: translateX(-30%);
+  animation: sweepMove 2.6s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.loader--iris .loader__sweep,
+.loader--flash .loader__sweep {
+  opacity: 0;
+}
+
+@keyframes sweepMove {
+  0% { transform: translateX(-35%); }
+  50% { transform: translateX(10%); }
+  100% { transform: translateX(-35%); }
+}
+
+/* ---------- the iris: a full black disc that closes down to reveal the site ---------- */
+.loader__iris {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #08080a;
+  clip-path: circle(150% at 50% 50%);
+  transition: clip-path 0.001s;
+}
+
+.loader--iris .loader__iris {
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 780ms cubic-bezier(0.7, 0, 0.15, 1);
+}
+
+/* subtle vignette so the black disc doesn't feel flat */
+.loader__iris::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 60% at 50% 45%, rgba(255, 255, 255, 0.035), transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- content stack ---------- */
+.loader__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  --focus: 0;
+  filter: blur(calc((1 - var(--focus)) * 16px));
+  transform: scale(calc(1 + (1 - var(--focus)) * 0.22));
+  opacity: calc(0.25 + var(--focus) * 0.75);
+  will-change: filter, transform, opacity;
+}
+
+.loader__stage--sharp {
+  filter: blur(0);
+  transform: scale(1);
+  opacity: 1;
+}
+
+.loader--held .loader__stage,
+.loader--flash .loader__stage,
+.loader--iris .loader__stage {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.loader--iris .loader__stage {
+  transform: scale(1.06);
+  opacity: 0;
+  transition: transform 0.7s var(--ease-out), opacity 0.5s ease;
+}
+
+/* ---------- rangefinder ring ---------- */
+.loader__ring-wrap {
+  position: relative;
+  width: 148px;
+  height: 148px;
+}
+
+@media (max-width: 480px) {
+  .loader__ring-wrap {
+    width: 116px;
+    height: 116px;
+  }
+}
+
+.loader__ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.loader__ring-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 1.5;
+}
+
+.loader__ring-arc {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 678.6; /* 2 * PI * 108 */
+  stroke-dashoffset: calc(678.6 - (678.6 * var(--progress, 0)));
+  filter: drop-shadow(0 0 6px rgba(201, 168, 118, 0.55));
+}
+
+.loader__ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader__mark {
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--gold-bright);
+  opacity: 0.85;
+}
+
+/* ---------- brand wordmark ---------- */
+.loader__brand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.loader__word {
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  letter-spacing: calc(0.1em + (1 - var(--focus, 0)) * 0.6em);
+  color: var(--text-hi);
+  transition: letter-spacing 0.1s linear;
+}
+
+.loader__word--accent {
+  color: var(--gold-bright);
+}
+
+/* ---------- caption + percent ---------- */
+.loader__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.loader__caption {
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  color: var(--text-mid);
+}
+
+.loader__percent {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--text-low);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.6em;
+}
+
+.loader__percent::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 480px) {
+  .loader__meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ---------- camera-flash click, right before the iris closes ---------- */
+.loader__flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader--flash .loader__flash {
+  animation: flashPulse 110ms ease-out;
+}
+
+@keyframes flashPulse {
+  0% { opacity: 0; }
+  35% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+.site {
+  transition: opacity 0.4s ease;
+}
+
+.site--hidden {
+  opacity: 0;
+  pointer-events: none;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.site--visible {
+  opacity: 1;
+}

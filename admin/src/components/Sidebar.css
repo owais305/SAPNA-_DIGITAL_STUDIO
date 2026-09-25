@@ -1,0 +1,95 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 16px;
+  z-index: 60;
+  transition: transform 0.25s ease, width 0.25s ease;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 17px;
+  padding: 4px 10px 26px;
+  letter-spacing: -0.2px;
+}
+.sidebar__brand-icon {
+  display: inline-flex;
+  color: var(--accent);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.sidebar__link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+.sidebar__link--active {
+  background: var(--text);
+  color: #0b0e15;
+}
+.sidebar__link--active svg {
+  color: #0b0e15;
+}
+
+.sidebar__footer {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.sidebar__scrim {
+  display: none;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+    width: min(var(--sidebar-w), 82vw);
+  }
+  .sidebar--open {
+    transform: translateX(0);
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.4);
+  }
+  .sidebar__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 4, 8, 0.55);
+    z-index: 55;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 18px 12px;
+  }
+}

@@ -1,0 +1,41 @@
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 118, 0.14) 0%,
+    rgba(201, 168, 118, 0.06) 32%,
+    rgba(201, 168, 118, 0) 68%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 10px 2px rgba(224, 192, 144, 0.7);
+  pointer-events: none;
+  z-index: 6;
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  .cursor-glow,
+  .cursor-dot {
+    display: none;
+  }
+}

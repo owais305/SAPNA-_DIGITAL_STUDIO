@@ -1,0 +1,40 @@
+.payments-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+  max-width: 480px;
+}
+.payments-summary__item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.payments-summary__item span {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.payments-summary__item strong {
+  font-size: 22px;
+}
+.payments-summary__item .green {
+  color: var(--green);
+}
+.payments-summary__item .red {
+  color: var(--red);
+}
+
+.payments-filter-row {
+  margin-bottom: 18px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+@media (max-width: 480px) {
+  .payments-summary {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+}

@@ -1,0 +1,159 @@
+.confirm-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  width: 100%;
+  padding: 17px 28px;
+  border-radius: var(--radius-s);
+  background: var(--gold);
+  color: #14110c;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+.confirm-btn:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+.confirm-btn:disabled {
+  cursor: default;
+}
+
+.confirm-btn--loading {
+  background: #b99a6c;
+}
+
+.confirm-btn--success {
+  background: var(--success);
+  color: #0a2416;
+}
+
+/* Glow */
+.confirm-btn__glow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 60%);
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.confirm-btn:not(:disabled):hover .confirm-btn__glow {
+  opacity: 0.25;
+}
+
+.confirm-btn--loading .confirm-btn__glow {
+  opacity: 0.35;
+  animation: glowPulse 1.3s ease-in-out infinite;
+}
+
+.confirm-btn--success .confirm-btn__glow {
+  opacity: 0.4;
+  animation: glowBurst 0.6s ease-out;
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: scale(0.6); opacity: 0.2; }
+  50% { transform: scale(1); opacity: 0.45; }
+}
+
+@keyframes glowBurst {
+  0% { transform: scale(0.3); opacity: 0.7; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Ripple */
+.confirm-btn__ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: rippleExpand 0.65s ease-out forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Content */
+.confirm-btn__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm-btn__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Spinner */
+.confirm-btn__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(20, 17, 12, 0.3);
+  border-top-color: #14110c;
+  border-radius: 50%;
+  animation: spinLoader 0.7s linear infinite;
+}
+
+@keyframes spinLoader {
+  to { transform: rotate(360deg); }
+}
+
+/* Success tick */
+.confirm-btn__tick {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.confirm-btn__tick-circle {
+  fill: none;
+  stroke: #0a2416;
+  stroke-width: 3;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: tickCircle 0.4s ease-out forwards;
+}
+
+.confirm-btn__tick-check {
+  fill: none;
+  stroke: #0a2416;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: tickCheck 0.3s ease-out 0.35s forwards;
+}
+
+@keyframes tickCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes tickCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.confirm-btn:focus-visible {
+  outline: 2px solid var(--text-hi);
+  outline-offset: 3px;
+}
